@@ -137,7 +137,7 @@ const Sidebar: React.FC = () => {
         <DatePicker picker="year" style={{ width: "100%" }} />
         <div className="genresList">
           <p>Genres:</p>
-          //renderujemo sve zanrove iz baze
+
           {genresList.map((genre) => (
             <Checkbox
               style={{ fontSize: "18px" }}
