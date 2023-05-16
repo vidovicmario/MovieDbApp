@@ -12,7 +12,7 @@ function NavBar(): JSX.Element {
   const menuItems: MenuItem[] = [
     {
       label: "Movie App",
-      key: "Movie App",
+      key: "movieApp",
     },
     {
       label: "Favorite",
@@ -32,6 +32,8 @@ function NavBar(): JSX.Element {
       navigate("/favorite");
     } else if (key === "entrance") {
       setEntranceVisible(true);
+    } else if (key === "movieApp") {
+      navigate("/");
     }
   };
 
