@@ -131,7 +131,7 @@ function MovieDetailsCard() {
             <h2 css={descriptionStyle}>{currentMovie.overview}</h2>
           </div>
         </div>
-        <div>
+        <div style={{ position: "relative" }}>
           <button onClick={handeDetialsBtn}>Details</button>
           <button onClick={handleVideosBtn}>Video</button>
           {videoUrl?.map((video: any, index: any) => (
@@ -155,7 +155,12 @@ function MovieDetailsCard() {
             </div>
           ))}
           <>
-            <button onClick={handleActorsBtn}>Actors</button>
+            <button
+              onClick={handleActorsBtn}
+              style={{ position: "absolute", top: "0px", zIndex: "99", left: "175px" }}
+            >
+              Actors
+            </button>
             <div css={cardContainer}>
               {actors &&
                 Array.isArray(actors) &&
@@ -203,6 +208,7 @@ export default MovieDetailsCard;
 // import { useParams } from "react-router-dom";
 // import singleMovieGetter from "../alova/singleMovieGetter";
 // import { Movie } from "../components/Interfaces";
+import store from "../store/store";
 
 // function MovieDetails() {
 //   const [currentMovie, setCurrentMovie] = useState<Movie>({} as Movie);

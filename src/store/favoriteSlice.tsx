@@ -13,13 +13,16 @@ const initialState: FavoriteState = {
 const FavoriteSlice = createSlice({
   name: "favorite",
   initialState,
+  //get favoriteMovie, uzima jedan film i setuje u state,
   reducers: {
     getFavoriteMovie: (state, action: PayloadAction<Movie>) => {
+      console.log(action.payload);
+
       let favoriteItem = action.payload;
       let favoriteArray: Movie[] = [...state.favorite];
 
       let found = null;
-
+      //ako postoji film u favorite, onda brise taj isti film u suprotnom ga setuje
       favoriteArray.find((el, index) => {
         if (el.id === favoriteItem.id) found = index;
       });
@@ -29,11 +32,12 @@ const FavoriteSlice = createSlice({
       } else {
         favoriteArray.push(favoriteItem);
       }
-
+      //setujemo rezultat u state i spremamo u local storage
       state.favorite = favoriteArray;
       localStorage.setItem("favorite", JSON.stringify(state.favorite));
       console.log(state.favorite, found);
     },
+    //sve so imam u local storage setujem u state
     restoreFavorite: (state) => {
       const favoriteFromLocalStorage = localStorage.getItem("favorite");
       if (favoriteFromLocalStorage !== null) {

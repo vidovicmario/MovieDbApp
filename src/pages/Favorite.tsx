@@ -116,12 +116,14 @@ interface DataType {
 }
 
 function Favorite() {
+  //use selector za uzimanje state iz redux
   const { favorite } = useSelector((state: any) => state.favoriteStore);
   const [favoriteItems, setFavoriteItems] = useState<Movie[]>([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //ima li u locaclStorage "favorite" i ako ima uzima vrijednosti iz "favorite"
     if (localStorage.hasOwnProperty("favorite")) {
       const favoriteFromLocalStorage = localStorage.getItem("favorite");
       if (favoriteFromLocalStorage !== null) {
@@ -135,7 +137,9 @@ function Favorite() {
   //     setFavoriteItems(JSON.parse(localStorage.getItem("favorite")));
   //   }
   // }, [favorite]); ovako je bilo prije
-
+  //na osnovu id koji primamo u funkciji, trazimo objekat sa istim id
+  //kada dobijemo taj objekat stavljamo ga u dispatch i on ga onda provjerava
+  //favoriteSlice fajlu
   const hanldeFavorite = (id: any) => {
     console.log(id);
     const removeFromFavorite = favoriteItems.find((el) => el.id === id);
@@ -162,9 +166,9 @@ function Favorite() {
       key: "vote_average",
     },
     {
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
+      title: "Favorite",
+      key: "id",
+      dataIndex: "id",
       render: (id) => (
         <Space size="middle">
           <a onClick={() => hanldeFavorite(id)}>Unfavorite</a>
@@ -181,9 +185,11 @@ function Favorite() {
         columns={columns}
         dataSource={data}
         pagination={false}
+        //nas table je kao map, i on renderuje nase filmove
+        //a ako je kao map treba mu key da bude unique
+        //tako rowKeyu dodajem record.id kako bi bio unique
         rowKey={(record) => record.id}
       />
-      <button>Celar all</button>
     </div>
   );
 }

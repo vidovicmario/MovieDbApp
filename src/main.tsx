@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
+    {/* store nam dolazi iz reduxa i obuhvaca nasu app, provider nam providuje sve vrijednosti iz reduxa */}
     <Provider store={store}>
       <BrowserRouter>
         <App />

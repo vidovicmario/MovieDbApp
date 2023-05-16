@@ -63,14 +63,18 @@ const Sidebar: React.FC = () => {
 
   const onChange = (e: CheckboxChangeEvent) => {
     const selectedGenre = Number(e.target.name);
-
+    //kada odaberemo genre da li odabrani zanr postoji i ako postoji
+    //daj nam sve sto nije taj gnere
     if (genreFilter.includes(selectedGenre)) {
       setGenreFilter((prev) => prev.filter((g) => g !== selectedGenre));
-    } else {
+    }
+    //ako ima vise odabranih zanrova ulazi ovdje dodajemo stejtu te dodatne zanrove
+    else {
       setGenreFilter((prev) => [...prev, selectedGenre]);
     }
   };
 
+  //paginacija i logika za klik na iducu ili predhodnu stranicu
   const handleCurrentPage = (calc: "plus" | "minus") => {
     if (calc === "plus") {
       setCurrentPage((prev) => prev + 1);
@@ -78,22 +82,25 @@ const Sidebar: React.FC = () => {
       setCurrentPage((prev) => prev - 1);
     }
   };
-
+  //od areja elemenata pravimo string za request
   const genresString = genreFilter.join(",");
-
+  //userequest za request podataka
   const { data }: any = useRequest(genresItemGetter, {
     initialData: { genres: [] },
   });
 
+  //na promjenu dodaj data.genres u stejt
   useEffect(() => {
     setGenresList(data.genres);
   }, [data]);
 
+  //na pomjenu filtera i paginacije pozovem funkcije iz reduxa
   useEffect(() => {
     dispatch(getGenres(genresString));
     dispatch(getCurrentPage(currentPage));
   }, [genreFilter, currentPage, dispatch]);
 
+  //logika za paginaciju
   const itemRender = (
     page: number,
     type: "page" | "prev" | "next" | "jump-prev" | "jump-next" | undefined,
@@ -130,6 +137,7 @@ const Sidebar: React.FC = () => {
         <DatePicker picker="year" style={{ width: "100%" }} />
         <div className="genresList">
           <p>Genres:</p>
+          //renderujemo sve zanrove iz baze
           {genresList.map((genre) => (
             <Checkbox
               style={{ fontSize: "18px" }}

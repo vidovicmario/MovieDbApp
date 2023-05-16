@@ -10,8 +10,10 @@ import { restoreFavorite } from "./store/favoriteSlice";
 import NavBar from "./components/NavBar";
 
 function App() {
+  //dispatch aktivira, poziva funkcije iz reduxa
   const dispatch = useDispatch();
-
+  //usseEffect koji se pokrece na prvo ucitavanje i iz naseg localStorage ako ima
+  //favorite vraca vrijednosti iz loclStorage
   useEffect(() => {
     const favorite = localStorage.getItem("favorite") ?? "";
     dispatch(restoreFavorite(JSON.parse(favorite)));
